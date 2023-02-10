@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvv341n1ay33d"]
+
+[ext_resource type="PackedScene" uid="uid://b7cbx40bbdj3o" path="res://grass test/grassblade.blend" id="1_yvwbs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nq6fo"]
+cull_mode = 2
+albedo_color = Color(0.490196, 1, 0.670588, 1)
+
+[node name="grassblade" instance=ExtResource("1_yvwbs")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_nq6fo")

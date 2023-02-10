@@ -1,0 +1,98 @@
+[gd_scene load_steps=13 format=3 uid="uid://dt4sxf2a2tsr8"]
+
+[ext_resource type="Shader" uid="uid://cfqwvdlo3bgn" path="res://water.tres" id="1_lkw0h"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fntig"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_4hnyt"]
+sky_material = SubResource("ProceduralSkyMaterial_fntig")
+
+[sub_resource type="Environment" id="Environment_vl11n"]
+background_mode = 2
+sky = SubResource("Sky_4hnyt")
+tonemap_mode = 3
+volumetric_fog_enabled = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6huvr"]
+height = 3.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_vlsat"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vrgva"]
+size = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g2wfy"]
+size = Vector3(5, 1, 5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sq07r"]
+size = Vector2(50, 50)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fcg2w"]
+render_priority = 0
+shader = ExtResource("1_lkw0h")
+shader_parameter/albedo = Color(0, 0.482353, 0.729412, 1)
+shader_parameter/ProxiFoamDistMax = 0.5
+shader_parameter/ProxiFoamDistMin = 1.0
+shader_parameter/Speed = 1.0
+shader_parameter/Wave_Frequency = 1.0
+shader_parameter/Alpha = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7gcut"]
+size = Vector2(75, 75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ryfc"]
+albedo_color = Color(0.368627, 0.172549, 0.156863, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Env" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
+environment = SubResource("Environment_vl11n")
+
+[node name="Camera3D" type="Camera3D" parent="Env"]
+transform = Transform3D(0.846678, -0.315746, 0.428301, 0, 0.804916, 0.593389, -0.532106, -0.502409, 0.681504, 1.70455, 1.03655, 2.28672)
+visible = false
+current = true
+
+[node name="Shapes" type="Node" parent="."]
+
+[node name="Cyl1" type="MeshInstance3D" parent="Shapes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26943, -0.722871, 0)
+mesh = SubResource("CylinderMesh_6huvr")
+skeleton = NodePath("../..")
+
+[node name="Cyl2" type="MeshInstance3D" parent="Shapes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.267008, -0.579139, 1.45722)
+mesh = SubResource("CylinderMesh_6huvr")
+skeleton = NodePath("../Cyl1")
+
+[node name="Box1" type="MeshInstance3D" parent="Shapes"]
+mesh = SubResource("BoxMesh_vlsat")
+
+[node name="BoxRot" type="MeshInstance3D" parent="Shapes"]
+transform = Transform3D(-0.208999, 0.757867, 0.618026, 0.479104, 0.630294, -0.610891, -0.852513, 0.168424, -0.494828, 0.964313, -0.157698, 1.23412)
+mesh = SubResource("BoxMesh_vrgva")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Shapes"]
+transform = Transform3D(0.740382, 0, 0.672186, 0, 1, 0, -0.672186, 0, 0.740382, 6.25519, 0, -2.49719)
+mesh = SubResource("BoxMesh_g2wfy")
+
+[node name="Water" type="Node" parent="."]
+
+[node name="Water" type="MeshInstance3D" parent="Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.298427, 0.149641, -0.364517)
+mesh = SubResource("PlaneMesh_sq07r")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_fcg2w")
+
+[node name="Floor" type="MeshInstance3D" parent="Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.91074, 0)
+mesh = SubResource("PlaneMesh_7gcut")
+surface_material_override/0 = SubResource("StandardMaterial3D_7ryfc")

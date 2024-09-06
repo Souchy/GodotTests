@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://bamqih1ydcvu6"]
+
+[ext_resource type="Shader" uid="uid://baq154u27sxff" path="res://dissolve/dissolve_shader.tres" id="1_7fhhp"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kli4x"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7csnc"]
+seamless = true
+noise = SubResource("FastNoiseLite_kli4x")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_7fhhp")
+shader_parameter/Albedo = Color(1, 0.501961, 0.854902, 1)
+shader_parameter/Dissolve = 0.5
+shader_parameter/Noise = SubResource("NoiseTexture2D_7csnc")

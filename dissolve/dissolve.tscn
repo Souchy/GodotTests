@@ -1,0 +1,54 @@
+[gd_scene load_steps=11 format=3 uid="uid://dlmo0yfgk3ikh"]
+
+[ext_resource type="PackedScene" uid="uid://ddylw6hndlnkq" path="res://dissolve/character.tscn" id="1_i8ai6"]
+[ext_resource type="PackedScene" uid="uid://c8b0j7r5itin0" path="res://dissolve/characterblender.blend" id="2_6jal3"]
+[ext_resource type="Material" uid="uid://bamqih1ydcvu6" path="res://dissolve/dissolve_mat.tres" id="3_fjvdt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qbja"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5m0kq"]
+next_pass = SubResource("ShaderMaterial_2qbja")
+albedo_color = Color(0.145098, 0.490196, 0.192157, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2hr6w"]
+material = SubResource("StandardMaterial3D_5m0kq")
+size = Vector2(15, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1wwxo"]
+render_priority = 5
+cull_mode = 1
+shading_mode = 0
+disable_receive_shadows = true
+shadow_to_opacity = true
+billboard_keep_scale = true
+grow = true
+grow_amount = 0.02
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bh1q2"]
+next_pass = SubResource("StandardMaterial3D_1wwxo")
+albedo_color = Color(0.12549, 0.454902, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qpumv"]
+material = SubResource("StandardMaterial3D_bh1q2")
+
+[sub_resource type="SphereMesh" id="SphereMesh_r41uv"]
+material = ExtResource("3_fjvdt")
+
+[node name="dissolve" type="Node3D"]
+
+[node name="floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2hr6w")
+
+[node name="ball" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.445, 0)
+mesh = SubResource("SphereMesh_qpumv")
+
+[node name="Node3D" parent="." instance=ExtResource("1_i8ai6")]
+visible = false
+
+[node name="characterblender" parent="." instance=ExtResource("2_6jal3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.413521, 0, 0)
+
+[node name="ball2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999229, 0.0392598, 0, -0.0392598, 0.999229, 2.5, 0.445, 0)
+mesh = SubResource("SphereMesh_r41uv")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dt4sxf2a2tsr8"]
 
-[ext_resource type="Shader" uid="uid://cfqwvdlo3bgn" path="res://water.tres" id="1_lkw0h"]
+[ext_resource type="Shader" uid="uid://cfqwvdlo3bgn" path="res://water tests/water.tres" id="1_lkw0h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fntig"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
